@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Retail Analytics Chart Reports</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        margin: 20px;
+        background-color: #f4f4f9;
+      }
+      .chart-container {
+        margin: 30px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+      }
+      h1 {
+        color: #333;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 15px auto;
+        border: 1px solid #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Retail Analytics - Last 24 Hours Dashboard</h1>
+    <div class="chart-container">
+      <h2>Total Revenue by hour Chart</h2>
+      <!--Image Embedding: 
+      Uses the Data URI scheme (data:image/png;base64,...) to tell the browser to render the Base64 string ({{ hourly_b64 }}) directly as a PNG image.-->
+      <img
+        src="data:image/png;base64,{{ hourly_b64 }}"
+        alt="Hourly Revenue Trend"
+      />
+    </div>
+
+    <div class="chart-container">
+      <h2>Top 5 Products by Revenue Chart</h2>
+      <img
+        src="data:image/png;base64,{{ products_b64 }}"
+        alt="Top 5 Products by Revenue"
+      />
+    </div>
+    <p>Generated at: {{ timestamp }}</p>
+  </body>
+</html>
