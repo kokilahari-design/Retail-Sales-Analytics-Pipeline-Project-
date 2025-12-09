@@ -11,8 +11,8 @@ import io
 # Database Connection
 DB_CONFIG = {
     'host': "localhost",
-    "user" : "root",
-    "password" : "kokila",
+    "user" : "root",                # type your user name
+    "password" : "kokila",          # type your password
     "database" : "retail_analytics"
 }
 
@@ -86,3 +86,4 @@ def generate_visualization_report():
 
 if __name__ == "__main__":
     generate_visualization_report()
+
