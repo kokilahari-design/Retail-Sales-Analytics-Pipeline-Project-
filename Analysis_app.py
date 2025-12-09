@@ -19,8 +19,8 @@ app = Flask(__name__)
 # Database Connection
 DB_CONFIG = {
     'host': "localhost",
-    "user" : "root",
-    "password" : "kokila",
+    "user" : "root",        #type for user name
+    "password" : "kokila",  #type your password
     "database" : "retail_analytics"
 }
 
@@ -92,3 +92,4 @@ def display_charts_in_browser():
 if __name__ == '__main__':
     app.run(debug=True)
 #run() method of Flask class runs the application on the local development server.
+
