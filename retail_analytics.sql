@@ -18,5 +18,5 @@ product_name VARCHAR(100) NOT NULL,
 product_category VARCHAR(100) NOT NULL,
 total_quantity INT NOT NULL,
 total_revenue DECIMAL(10, 2) NOT NULL,
-PRIMARY KEY(aggregation_hour, product_name)
+PRIMARY KEY(aggregation_hour, product_name, product_category)
 );
