@@ -9,10 +9,11 @@ import pymysql
 
 def transform_and_load_data(**kwargs): # (**kwargs) → Airflow passes context variables (like execution_date, task_instance, etc.), else don't pass args.
     # This task connects to the DB, reads all raw data, aggregates with Pandas, and writes to summary table.
+    # You should also use connection.autocommit(False) explicitly for transaction control.
     try:        
         connection = pymysql.connect(**DB_CONFIG)
 
-        # 1. Extraction (E) - Read all raw data
+        # 1. Extraction (E) - Read all raw data   # Instead of selecting all data every time, filter: WHERE sale_datetime >= execution_date to avoid reprocessing everything.
         df = pd.read_sql("SELECT * FROM sales_raw", connection)
         print(f" Extraction data from mysql:{df}")
 
@@ -30,7 +31,7 @@ def transform_and_load_data(**kwargs): # (**kwargs) → Airflow passes context v
          # 3. Load (L) - Write to summary table
          # ON DUPLICATE KEY UPDATE - If row already exists, MySQL should NOT fail - instead, it should update that existing row.
         cursor = connection.cursor() 
-        for index,row in summary_df.iterrows(): # Iterates through each row of the summary DataFrame
+        for index,row in summary_df.iterrows(): # Iterates through each row of the summary DataFrame # For very large datasets, .iterrows() is slow. Bulk inserts - executemany() would be better.
             insert_query = """
             Insert into hourly_sales_summary(aggregation_hour, product_name, product_category, total_quantity, total_revenue)
             Values (%s,%s,%s,%s,%s)
@@ -61,3 +62,4 @@ with DAG(                      # Create a new workflow and attach tasks inside i
         task_id='Transform_load_Sales_Data',  # Name of the task
         python_callable=transform_and_load_data, # Function executed when the task runs
     )
+
